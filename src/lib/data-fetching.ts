@@ -169,7 +169,7 @@ export async function fetchCaseStudiesCardsData(lang: string): Promise<CaseStudy
     if (!Array.isArray(data?.caseStudies)) return [];
     return data.caseStudies
       .map((cs: Record<string, unknown>) => ({
-        id: cs.caseStudyId as number,
+        id: (cs.caseStudyId ?? cs._id ?? cs.id) as number,
         title: cs.title as string,
         company: cs.company as string,
         industry: cs.industry as string,
@@ -177,7 +177,8 @@ export async function fetchCaseStudiesCardsData(lang: string): Promise<CaseStudy
         image: cs.image as string,
         stats: cs.stats as CaseStudyCard['stats'],
       }))
-      .sort((a: CaseStudyCard, b: CaseStudyCard) => a.id - b.id);
+      .filter((cs: CaseStudyCard) => cs.id !== undefined && cs.id !== null)
+      .sort((a: CaseStudyCard, b: CaseStudyCard) => (a.id as number) - (b.id as number));
   } catch (error) {
     console.error('Error fetching case studies:', error);
     return [];

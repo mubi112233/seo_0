@@ -18,6 +18,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Navbar } from "@/components/Navbar";
 import {
   Mail,
+  Phone,
+  MapPin,
   Send,
   CheckCircle2,
   Users,
@@ -27,6 +29,12 @@ import {
   Star,
   Clock,
   Shield,
+  Copy,
+  Sparkles,
+  ArrowRight,
+  Zap,
+  Globe,
+  Calendar,
 } from "lucide-react";
 
 type FormValues = {
@@ -87,6 +95,13 @@ const translations: Record<string, Record<string, string>> = {
     feature3: "Full ownership of all design files",
     feature4: "DACH region design specialists",
     responseTime: "We respond within 2 hours during business hours",
+    contactDirect: "Contact Directly",
+    copied: "Copied!",
+    formStep1: "Contact Info",
+    formStep2: "Project Details",
+    formStep3: "Requirements",
+    formHeaderTitle: "Start Your Project",
+    formHeaderSubtitle: "Fill out the form below and we'll get back to you within 24 hours.",
   },
   ge: {
     badge: "Kontakt aufnehmen",
@@ -131,6 +146,13 @@ const translations: Record<string, Record<string, string>> = {
     feature3: "Volle Eigentumsrechte an allen Design-Dateien",
     feature4: "Spezialisten für DACH-Region",
     responseTime: "Wir antworten innerhalb von 2 Stunden während der Geschäftszeiten",
+    contactDirect: "Direkt kontaktieren",
+    copied: "Kopiert!",
+    formStep1: "Kontakt",
+    formStep2: "Projektdetails",
+    formStep3: "Anforderungen",
+    formHeaderTitle: "Projekt starten",
+    formHeaderSubtitle: "Füllen Sie das Formular aus und wir melden uns innerhalb von 24 Stunden.",
   },
 };
 
@@ -178,14 +200,17 @@ const timelineOptions = [
   { value: "flexible", label: "Flexible" },
 ];
 
-function FormSection({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
+function FormSection({ step, icon: Icon, title, children }: { step: number; icon: React.ElementType; title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 pb-2 border-b border-border/50">
-        <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-          <Icon className="w-4 h-4 text-blue-400" />
+    <div className="space-y-5">
+      <div className="flex items-center gap-3 pb-3 border-b border-border/50">
+        <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+          <Icon className="w-4 h-4 text-amber-500" />
         </div>
-        <span className="text-sm font-semibold text-foreground">{title}</span>
+        <div className="flex items-center gap-2">
+          <span className="flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-[10px] font-bold text-black">{step}</span>
+          <span className="text-sm font-semibold text-foreground">{title}</span>
+        </div>
       </div>
       {children}
     </div>
@@ -194,6 +219,45 @@ function FormSection({ icon: Icon, title, children }: { icon: React.ElementType;
 
 function FieldError({ message }: { message?: string }) {
   return message ? <p className="text-xs font-medium text-destructive mt-1">{message}</p> : null;
+}
+
+function ContactCard({ icon: Icon, label, value, href }: { icon: React.ElementType; label: string; value: string; href?: string }) {
+  const { toast } = useToast();
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(value);
+    toast({ title: "Copied!", description: `${value} copied to clipboard.` });
+  };
+
+  const content = (
+    <div className="flex items-center gap-3 p-4 bg-card/50 border border-border/40 rounded-xl hover:border-amber-500/30 hover:bg-amber-500/5 transition-all duration-300 group">
+      <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
+        <Icon className="w-4 h-4 text-amber-500" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-xs text-muted-foreground">{label}</div>
+        <div className="text-sm font-semibold text-foreground truncate">{value}</div>
+      </div>
+      <button
+        type="button"
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleCopy(); }}
+        className="p-1.5 rounded-md hover:bg-amber-500/10 text-muted-foreground hover:text-amber-500 transition-colors opacity-0 group-hover:opacity-100"
+        title="Copy"
+      >
+        <Copy className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className="block">
+        {content}
+      </a>
+    );
+  }
+
+  return content;
 }
 
 export default function ContactClient({ lang }: { lang: string }) {
@@ -257,20 +321,22 @@ export default function ContactClient({ lang }: { lang: string }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background relative overflow-hidden">
       {/* Background blobs */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/4 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/4 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/[0.02] rounded-full blur-[200px] pointer-events-none" />
 
       <Navbar />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 pt-28 pb-20">
         {/* Page Header */}
         <motion.div
-          className="text-left mb-12"
+          className="text-left mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-400 text-xs font-semibold rounded-full mb-4 tracking-wide uppercase">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-semibold rounded-full mb-4 tracking-wide uppercase">
+            <Sparkles className="w-3.5 h-3.5" />
             {c.badge}
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -296,22 +362,47 @@ export default function ContactClient({ lang }: { lang: string }) {
                 { value: c.stat1Value, label: c.stat1Label, icon: Users },
                 { value: c.stat2Value, label: c.stat2Label, icon: Clock },
                 { value: c.stat3Value, label: c.stat3Label, icon: Star },
-              ].map(({ value, label, icon: Icon }) => (
-                <div key={label} className="text-center p-4 bg-card border border-border/50 rounded-xl hover:border-blue-400/40 transition-colors">
-                  <Icon className="w-4 h-4 text-blue-400 mx-auto mb-1.5" />
-                  <div className="text-xl font-bold text-blue-400">{value}</div>
+              ].map(({ value, label, icon: Icon }, i) => (
+                <motion.div
+                  key={label}
+                  className="text-center p-4 bg-card border border-border/50 rounded-xl hover:border-amber-500/40 hover:shadow-gold/20 hover:shadow-lg transition-all duration-300 group cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.15 + i * 0.1 }}
+                >
+                  <div className="w-8 h-8 mx-auto mb-2 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center group-hover:bg-amber-500/20 transition-colors">
+                    <Icon className="w-4 h-4 text-amber-500" />
+                  </div>
+                  <div className="text-xl font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{value}</div>
                   <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
+            {/* Direct Contact Cards */}
+            <div className="space-y-3">
+              <h3 className="font-bold text-foreground text-sm flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-500" />
+                {c.contactDirect}
+              </h3>
+              <ContactCard icon={Mail} label="Email" value="hello@don-webdesign.com" href="mailto:hello@don-webdesign.com" />
+              <ContactCard icon={Phone} label="Phone" value="+49 123 456 7890" href="tel:+491234567890" />
+              <ContactCard icon={Calendar} label="Book a Call" value="Schedule on Calendly" href="https://calendly.com/d/cyhx-wdw-b57" />
+              <ContactCard icon={MapPin} label="Location" value="Berlin, Germany" />
+            </div>
+
             {/* Features */}
-            <div className="p-6 bg-card border border-border/50 rounded-xl space-y-4">
-              <h3 className="font-bold text-foreground text-base">{c.sideTitle}</h3>
+            <div className="p-6 bg-card border border-border/50 rounded-xl space-y-4 hover:border-amber-500/20 transition-colors duration-300">
+              <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+                <Globe className="w-4 h-4 text-amber-500" />
+                {c.sideTitle}
+              </h3>
               <ul className="space-y-3">
                 {[c.feature1, c.feature2, c.feature3, c.feature4].map((f) => (
                   <li key={f} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div className="w-5 h-5 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-amber-500" />
+                    </div>
                     <span className="text-sm text-muted-foreground">{f}</span>
                   </li>
                 ))}
@@ -319,34 +410,40 @@ export default function ContactClient({ lang }: { lang: string }) {
             </div>
 
             {/* Response time */}
-            <div className="flex items-center gap-3 p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+            <div className="flex items-center gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
+              <div className="relative flex-shrink-0">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping opacity-75" />
+              </div>
               <p className="text-sm text-muted-foreground">{c.responseTime}</p>
             </div>
 
             {/* Testimonial */}
-            <div className="p-5 bg-card border border-border/50 rounded-xl space-y-3">
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 text-blue-400 fill-blue-400" />)}
+            <div className="p-5 bg-gradient-to-br from-card to-muted/30 border border-border/50 rounded-xl space-y-4 hover:border-amber-500/20 transition-colors duration-300">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
+                ))}
               </div>
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                &ldquo;don-webdesign transformed our brand identity completely. The team's creativity and attention to detail exceeded all our expectations.&rdquo;
+                &ldquo;don-webdesign transformed our brand identity completely. The team&apos;s creativity and attention to detail exceeded all our expectations.&rdquo;
               </p>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-500/10 flex items-center justify-center">
-                  <span className="text-blue-400 font-bold text-xs">MK</span>
+              <div className="flex items-center gap-3 pt-2 border-t border-border/30">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500/40 to-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+                  <span className="text-amber-600 dark:text-amber-400 font-bold text-xs">MK</span>
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-foreground">Michael Keller</div>
+                  <div className="text-sm font-semibold text-foreground">Michael Keller</div>
                   <div className="text-xs text-muted-foreground">CEO, TechFlow GmbH</div>
                 </div>
+                <ArrowRight className="w-4 h-4 text-amber-500/50 ml-auto" />
               </div>
             </div>
 
             {/* Security note */}
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Shield className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-              <span>Your information is 100% secure and never shared.</span>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground p-3 bg-muted/30 rounded-lg">
+              <Shield className="w-4 h-4 text-amber-500 flex-shrink-0" />
+              <span>Your information is 100% secure and never shared with third parties.</span>
             </div>
           </motion.div>
 
@@ -357,36 +454,43 @@ export default function ContactClient({ lang }: { lang: string }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-card border border-border/50 rounded-2xl shadow-xl shadow-black/10 overflow-hidden">
+            <div className="bg-card border border-border/50 rounded-2xl shadow-xl shadow-black/5 overflow-hidden hover:shadow-2xl hover:shadow-black/10 transition-shadow duration-500">
               {/* Form header bar */}
-              <div className="px-6 sm:px-8 py-5 border-b border-border/50 bg-gradient-to-r from-blue-500/5 to-transparent">
-                <h2 className="font-bold text-foreground text-lg">Fill in your details</h2>
-                <p className="text-sm text-muted-foreground mt-0.5">All fields marked are required</p>
+              <div className="px-6 sm:px-8 py-6 border-b border-border/50 bg-gradient-to-r from-amber-500/5 via-amber-500/[0.02] to-transparent">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-amber-500" />
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-foreground text-lg">{c.formHeaderTitle}</h2>
+                    <p className="text-sm text-muted-foreground">{c.formHeaderSubtitle}</p>
+                  </div>
+                </div>
               </div>
 
-              <form className="px-6 sm:px-8 py-7 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+              <form className="px-6 sm:px-8 py-8 space-y-10" onSubmit={handleSubmit(onSubmit)}>
 
                 {/* Contact Info */}
-                <FormSection icon={Mail} title="Contact Information">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FormSection step={1} icon={Mail} title={c.formStep1}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <Label htmlFor="contactName" className="text-sm">{c.contactName} <span className="text-blue-400">*</span></Label>
+                      <Label htmlFor="contactName" className="text-sm font-medium">{c.contactName} <span className="text-amber-500">*</span></Label>
                       <Input
                         id="contactName"
                         type="text"
                         placeholder="John Smith"
-                        className="border-border/60 focus:border-blue-400/60 transition-colors"
+                        className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 transition-all"
                         {...register("contactName", { required: c.contactNameRequired })}
                       />
                       <FieldError message={errors.contactName?.message} />
                     </div>
                     <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-sm">{c.email} <span className="text-blue-400">*</span></Label>
+                      <Label htmlFor="email" className="text-sm font-medium">{c.email} <span className="text-amber-500">*</span></Label>
                       <Input
                         id="email"
                         type="email"
                         placeholder="you@company.com"
-                        className="border-border/60 focus:border-blue-400/60 transition-colors"
+                        className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 transition-all"
                         {...register("email", {
                           required: c.emailRequired,
                           pattern: { value: emailPattern, message: c.emailInvalid },
@@ -395,25 +499,25 @@ export default function ContactClient({ lang }: { lang: string }) {
                       <FieldError message={errors.email?.message} />
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <Label htmlFor="companyName" className="text-sm">{c.companyName} <span className="text-blue-400">*</span></Label>
+                      <Label htmlFor="companyName" className="text-sm font-medium">{c.companyName} <span className="text-amber-500">*</span></Label>
                       <Input
                         id="companyName"
                         type="text"
                         placeholder="Your Company GmbH"
-                        className="border-border/60 focus:border-blue-400/60 transition-colors"
+                        className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 transition-all"
                         {...register("companyName", { required: c.companyNameRequired })}
                       />
                       <FieldError message={errors.companyName?.message} />
                     </div>
                     <div className="space-y-1.5">
-                      <Label htmlFor="phone" className="text-sm">{c.phone} <span className="text-blue-400">*</span></Label>
+                      <Label htmlFor="phone" className="text-sm font-medium">{c.phone} <span className="text-amber-500">*</span></Label>
                       <Input
                         id="phone"
                         type="tel"
                         placeholder="+49 123 456 789"
-                        className="border-border/60 focus:border-blue-400/60 transition-colors"
+                        className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 transition-all"
                         {...register("phone", {
                           required: c.phoneRequired,
                           pattern: { value: phonePattern, message: c.phoneInvalid },
@@ -425,12 +529,12 @@ export default function ContactClient({ lang }: { lang: string }) {
                 </FormSection>
 
                 {/* Project Details */}
-                <FormSection icon={Briefcase} title="Project Details">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <FormSection step={2} icon={Briefcase} title={c.formStep2}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <Label className="text-sm">{c.projectTypeLabel} <span className="text-blue-400">*</span></Label>
+                      <Label className="text-sm font-medium">{c.projectTypeLabel} <span className="text-amber-500">*</span></Label>
                       <Select onValueChange={(v) => setValue("projectType", v, { shouldValidate: true })}>
-                        <SelectTrigger className="border-border/60 focus:border-blue-400/60">
+                        <SelectTrigger className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20">
                           <SelectValue placeholder={c.projectTypePlaceholder} />
                         </SelectTrigger>
                         <SelectContent>
@@ -449,12 +553,12 @@ export default function ContactClient({ lang }: { lang: string }) {
                             exit={{ opacity: 0, height: 0 }}
                             className="space-y-1.5 mt-3"
                           >
-                            <Label htmlFor="projectTypeOther" className="text-sm">{c.projectTypeOtherLabel}</Label>
+                            <Label htmlFor="projectTypeOther" className="text-sm font-medium">{c.projectTypeOtherLabel}</Label>
                             <Textarea
                               id="projectTypeOther"
                               rows={2}
                               placeholder={c.projectTypeOtherPlaceholder}
-                              className="border-border/60 focus:border-blue-400/60 resize-none"
+                              className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 resize-none"
                               {...register("projectTypeOther")}
                             />
                           </motion.div>
@@ -462,9 +566,9 @@ export default function ContactClient({ lang }: { lang: string }) {
                       </AnimatePresence>
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-sm">{c.budgetRangeLabel}</Label>
+                      <Label className="text-sm font-medium">{c.budgetRangeLabel}</Label>
                       <Select onValueChange={(v) => setValue("budgetRange", v)}>
-                        <SelectTrigger className="border-border/60 focus:border-blue-400/60">
+                        <SelectTrigger className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20">
                           <SelectValue placeholder={c.budgetRangePlaceholder} />
                         </SelectTrigger>
                         <SelectContent>
@@ -476,11 +580,11 @@ export default function ContactClient({ lang }: { lang: string }) {
                       <input type="hidden" {...register("budgetRange")} />
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <Label className="text-sm">{c.industryLabel} <span className="text-blue-400">*</span></Label>
+                      <Label className="text-sm font-medium">{c.industryLabel} <span className="text-amber-500">*</span></Label>
                       <Select onValueChange={(v) => setValue("industry", v, { shouldValidate: true })}>
-                        <SelectTrigger className="border-border/60 focus:border-blue-400/60">
+                        <SelectTrigger className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20">
                           <SelectValue placeholder={c.industryLabel} />
                         </SelectTrigger>
                         <SelectContent>
@@ -493,9 +597,9 @@ export default function ContactClient({ lang }: { lang: string }) {
                       <FieldError message={errors.industry?.message} />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-sm">{c.timelineLabel}</Label>
+                      <Label className="text-sm font-medium">{c.timelineLabel}</Label>
                       <Select onValueChange={(v) => setValue("timeline", v)}>
-                        <SelectTrigger className="border-border/60 focus:border-blue-400/60">
+                        <SelectTrigger className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20">
                           <SelectValue placeholder={c.timelinePlaceholder} />
                         </SelectTrigger>
                         <SelectContent>
@@ -510,15 +614,15 @@ export default function ContactClient({ lang }: { lang: string }) {
                 </FormSection>
 
                 {/* Design Requirements */}
-                <FormSection icon={Users} title="Design Requirements">
+                <FormSection step={3} icon={Users} title={c.formStep3}>
                   <div className="grid grid-cols-1 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="designRequirements" className="text-sm">{c.designRequirementsLabel}</Label>
+                      <Label htmlFor="designRequirements" className="text-sm font-medium">{c.designRequirementsLabel}</Label>
                       <Textarea
                         id="designRequirements"
                         rows={6}
                         placeholder={c.designRequirementsPlaceholder}
-                        className="border-border/60 focus:border-blue-400/60 resize-none"
+                        className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 resize-none"
                         {...register("designRequirements")}
                       />
                     </div>
@@ -526,14 +630,13 @@ export default function ContactClient({ lang }: { lang: string }) {
                 </FormSection>
 
                 {/* Additional Notes */}
-                <FormSection icon={MessageSquare} title="Additional Information">
+                <FormSection step={3} icon={MessageSquare} title={c.otherInfoLabel}>
                   <div className="space-y-1.5">
-                    <Label htmlFor="otherInfo" className="text-sm">{c.otherInfoLabel}</Label>
                     <Textarea
                       id="otherInfo"
                       rows={4}
                       placeholder={c.otherInfoPlaceholder}
-                      className="border-border/60 focus:border-blue-400/60 resize-none"
+                      className="border-border/60 focus:border-amber-500/60 focus:ring-amber-500/20 resize-none"
                       {...register("otherInfo")}
                     />
                   </div>
@@ -544,7 +647,7 @@ export default function ContactClient({ lang }: { lang: string }) {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 py-3 bg-gold hover:bg-yellow-500 text-black font-bold rounded-xl shadow-lg shadow-gold/25 hover:shadow-gold/40 hover:scale-[1.02] active:scale-[0.99] transition-all duration-200 text-base"
+                    className="w-full sm:w-auto px-10 py-3 h-auto bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.99] transition-all duration-200 text-base"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">

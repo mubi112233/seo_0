@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { HomeBelowFold } from "@/components/HomeBelowFold.hybrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { fetchApiData, API_ENDPOINTS, normalizeLanguage, fetchFAQ } from "@/lib/api";
+import { fetchApiData, API_ENDPOINTS, normalizeLanguage, fetchFAQ, type HeroData } from "@/lib/api";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL, absoluteUrl, hreflangAlternates, publicLocalePathSegment } from "@/lib/site-url";
 
@@ -110,7 +110,7 @@ export async function generateMetadata({
       alternateLocale: lang === "ge" ? "en_US" : "de_DE",
       images: [
         {
-          url: "/og-image.jpg",
+          url: absoluteUrl("/opengraph-image"),
           width: 1200,
           height: 630,
           alt: lang === "ge" ? "don-webdesign — Premium Webdesign Agentur" : "don-webdesign — Premium Web Design Services",
@@ -121,7 +121,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [absoluteUrl("/og-image.jpg")],
+      images: [absoluteUrl("/opengraph-image")],
     },
     robots: {
       index: true,
@@ -187,9 +187,21 @@ export default async function HomeLangPage({
   const lang = rawLang === 'de' || rawLang === 'ge' ? 'ge' : 'en';
   const jsonLd = pageJsonLd(SITE_URL)[lang];
 
+  // Fetch hero data server-side so crawlers see real content in HTML
+  const heroApiData = await fetchApiData<{ hero: HeroData | HeroData[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang));
+  let initialHero: HeroData | null = null;
+  if (heroApiData?.hero) {
+    if (Array.isArray(heroApiData.hero)) {
+      const sorted = [...heroApiData.hero].sort((a, b) => (b._id || '').localeCompare(a._id || ''));
+      initialHero = sorted[0] || null;
+    } else {
+      initialHero = heroApiData.hero;
+    }
+  }
+
   // Fetch FAQ data for structured data
-  const faqData = await fetchFAQ(lang);
-  const faqs = faqData?.faqs?.slice(0, 10) || []; // Limit to 10 FAQs for schema
+  const faqData = await fetchFAQ(normalizeLanguage(lang));
+  const faqs = faqData?.faqs?.slice(0, 10) || [];
 
   // Generate FAQ schema
   const faqSchema = faqs.length > 0
@@ -219,7 +231,7 @@ export default async function HomeLangPage({
       )}
       <Navbar />
       <main id="main-content" className="overflow-x-hidden">
-        <Hero />
+        <Hero initialData={initialHero} />
         <HomeBelowFold lang={lang} />
       </main>
     </div>

@@ -27,9 +27,9 @@ const sectionCopy = {
   },
 };
 
-export const Services = () => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
+export const Services = ({ initialServices }: { initialServices?: Service[] }) => {
+  const [services, setServices] = useState<Service[]>(initialServices ?? []);
+  const [loading, setLoading] = useState(!initialServices);
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
   const currentLang = pathname.startsWith('/ge') || pathname.startsWith('/de') ? 'ge' : 'en';
@@ -37,6 +37,7 @@ export const Services = () => {
   const copy = sectionCopy[currentLang as keyof typeof sectionCopy] || sectionCopy.en;
 
   useEffect(() => {
+    if (initialServices) return;
     const fetchServicesData = async () => {
       try {
         setLoading(true);
@@ -56,7 +57,7 @@ export const Services = () => {
       }
     };
     fetchServicesData();
-  }, [currentLang]);
+  }, [currentLang, initialServices]);
 
   if (loading) {
     return (

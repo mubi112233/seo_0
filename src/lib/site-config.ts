@@ -34,7 +34,9 @@ export const siteConfig: SiteConfig = {
 
 export const normalizeLocale = (locale: string): SiteLocale => {
   const raw = (locale || "").toLowerCase();
-  if (raw.startsWith("ge") || raw.startsWith("de")) return "ge";
+  // Handle full pathnames like "/de/contact" or "/ge/blog"
+  const seg = raw.replace(/^\//, "").split("/")[0];
+  if (seg === "ge" || seg === "de") return "ge";
   return "en";
 };
 

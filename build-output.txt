@@ -1,0 +1,20 @@
+ ΓÜá Linting is disabled.
+   Γû▓ Next.js 15.5.14
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ┬╖ optimizePackageImports
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 13.7s
+   Checking validity of types ...
+Failed to compile.
+
+./mange-email/frontend/vite.config.ts:1:30
+Type error: Cannot find module 'vite' or its corresponding type declarations.
+
+> 1 | import { defineConfig } from "vite";
+    |                              ^
+  2 | import react from "@vitejs/plugin-react-swc";
+  3 | import path from "path";
+  4 |
+Next.js build worker exited with code: 1 and signal: null

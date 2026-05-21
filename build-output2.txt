@@ -1,0 +1,7 @@
+ ΓÜá Linting is disabled.
+   Γû▓ Next.js 15.5.14
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ┬╖ optimizePackageImports
+
+   Creating an optimized production build ...

@@ -1,0 +1,52 @@
+   Γû▓ Next.js 15.5.14
+   - Local:        http://localhost:3000
+   - Network:      http://172.30.95.89:3000
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ┬╖ optimizePackageImports
+
+ Γ£ô Starting...
+ Γ£ô Ready in 6s
+ Γ£ô Compiled /middleware in 461ms (114 modules)
+ Γùï Compiling /[lang]/contact ...
+ Γ£ô Compiled /[lang]/contact in 18.5s (1555 modules)
+ Γ£ô Compiled in 1763ms (697 modules)
+ GET /en/contact 200 in 26736ms
+ Γùï Compiling /[lang] ...
+ Γ£ô Compiled /[lang] in 7.7s (5079 modules)
+[fetchApiData] Endpoint: /api/hero | Lang: en | Tenant: webdesign
+[API Server] Fetching: https://api.don-va.com/api/hero?lang=en
+[API Server] Headers: { 'x-tenant-id': 'webdesign' }
+[API Server] Tenant ID from env: webdesign
+[fetchApiData] Response for /api/hero: {
+  lang: 'en',
+  hero: {
+    _id: '69fcd25d9b33f9733a8633c6',
+    lang: 'en',
+    title: 'Websites That Win Clients. Not Just Look Good.',
+    subtitle: 'We design and develop high-performance websites for DACH businesses ΓÇö built for speed, optimised for conversions, and crafted to make your brand impossible to ignore.',
+    tagline: 'Trusted by 500+ Businesses Across Europe',
+    ctaPrimary: 'Book Your Free Consultation',
+    urgency: 'Free SEO Audit Included With Every Project',
+    metaTitle: 'DON Webdesign ΓÇô High-Performance Web Design for DACH Businesses',
+    metaDescription: 'Professional web design and development for German-speaking businesses. Fast, conversion-optimised websites built to grow your brand and win more clients. Free SEO audit included.',
+    metaKeywords: 'web design Germany, Webdesign Agentur Deutschland, DACH web design, professional website design, conversion optimised websites, Webdesign DACH, DON Webdesign',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&fit=crop',
+    statsClients: '500+',
+    statsClientsLabel: 'Clients Served',
+    statsProjects: '800+',
+    statsProjectsLabel: 'Projects Delivered',
+    statsRating: '4.9/5',
+    statsRatingLabel: 'Client Rating',
+    statsSatisfaction: '98%',
+    statsSatisfactionLabel: 'Satisfaction Rate',
+    createdAt: '2026-01-01T00:00:00.000+00:00',
+    updatedAt: '2026-01-01T00:00:00.000+00:00'
+  }
+}
+[generateMetadata] hero data: {"metaTitle":"DON Webdesign ΓÇô High-Performance Web Design for DACH Businesses","metaDescription":"Professional web design and development for German-speaking businesses. Fast, conversion-optimised websites built to grow your brand and win more clients. Free SEO audit included.","metaKeywords":"web design Germany, Webdesign Agentur Deutschland, DACH web design, professional website design, conversion optimised websites, Webdesign DACH, DON Webdesign","title":"Websites That Win Clients. Not Just Look Good.","_id":"69fcd25d9b33f9733a8633c6"}
+ GET /favicon.ico 404 in 13168ms
+ Γ£ô Compiled in 42.1s (2440 modules)
+ Γ£ô Compiled in 1787ms (2440 modules)
+ Γ£ô Compiled in 57.7s (2440 modules)
+ Γ£ô Compiled in 3.2s (2440 modules)

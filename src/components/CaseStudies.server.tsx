@@ -61,9 +61,9 @@ export async function CaseStudies({ lang }: { lang: string }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {studies.map((study, index) => (
+          {studies.filter(study => !!study.id).map((study, index) => (
             <Link
-              key={`case-study-${study.id ?? index}-${index}`}
+              key={`case-study-${study.id}-${index}`}
               href={`/${urlSeg}/case-study/${slugify(study.title)}-${study.id}`}
               className="group bg-card border border-border rounded-xl sm:rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 w-full block"
             >

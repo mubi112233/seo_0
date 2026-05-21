@@ -9,11 +9,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { siteConfig, localizedPath, type SiteLocale } from "@/lib/site-config";
 
-export const Hero = () => {
+export const Hero = ({ initialData }: { initialData?: HeroData | null }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -39,8 +39,8 @@ export const Hero = () => {
 
   const isGe = currentLang === "ge";
 
-  // don-webdesign style fallback data
-  const fallbackData: HeroData = useMemo(() => isGe
+  // Fallback — no hardcoded stats, only text content
+  const fallbackData = useMemo(() => isGe
     ? {
         title: "don-webdesign: Websites that Convert",
         subtitle: "Moderne Webdesign- und Entwicklungslösungen mit Fokus auf Geschwindigkeit, UX und Conversions. Von der Strategie bis zum Launch – alles individuell auf Ihre Marke zugeschnitten.",
@@ -48,7 +48,6 @@ export const Hero = () => {
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=900&fit=crop&q=80",
         ctaPrimary: "Kostenlose Beratung buchen",
         urgency: "Kostenloses umfassendes SEO-Audit inklusive",
-        stats: { clients: "1M+", costSaved: "350%", rating: "#1" },
       }
     : {
         title: "don-webdesign: Websites that Convert",
@@ -57,20 +56,18 @@ export const Hero = () => {
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=900&fit=crop&q=80",
         ctaPrimary: "Book Free Consult",
         urgency: "Free comprehensive SEO audit included",
-        stats: { clients: "1M+", costSaved: "350%", rating: "#1" },
       }, [isGe]);
 
-  const [heroData, setHeroData] = useState<HeroData | null>(fallbackData);
+  const [heroData, setHeroData] = useState<HeroData | null>(initialData ?? null);
 
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
         setLoading(true);
         const data = await fetchHero(currentLang);
-        setHeroData(data || fallbackData);
-      } catch (error) {
-        console.error("Failed to fetch hero data:", error);
-        setHeroData(fallbackData);
+        if (data) setHeroData(data);
+      } catch {
+        // keep existing data
       } finally {
         setLoading(false);
       }
@@ -83,24 +80,26 @@ export const Hero = () => {
 
   const title = heroData?.title || fallbackData.title;
   const subtitle = heroData?.subtitle || fallbackData.subtitle;
-  // Translate tagline to German if API returns English but user is on German site
   const rawTagline = heroData?.tagline || fallbackData.tagline;
   const tagline = isGe && rawTagline === "Trusted by 500+ Businesses Worldwide"
     ? "Vertraut von 500+ Unternehmen weltweit"
     : rawTagline;
   const rawImage = heroData?.image || fallbackData.image;
-  // Handle relative image URLs by prepending API base URL
   const heroImage = rawImage?.startsWith('/') && !rawImage.startsWith('http')
     ? `${process.env.NEXT_PUBLIC_API_BASE || 'https://api.don-va.com'}${rawImage}`
     : rawImage;
   const ctaPrimary = heroData?.ctaPrimary || fallbackData.ctaPrimary;
   const urgency = heroData?.urgency || fallbackData.urgency;
-  const stats = heroData?.stats || fallbackData.stats;
 
-  const statsLabels = isGe
-    ? { clients: "Keywords Rankiert", costSaved: "Traffic-Steigerung", rating: "Top Platzierungen" }
-    : { clients: "Keywords Ranked", costSaved: "Traffic Boost", rating: "Top Rankings" };
+  // Build stats array from flat API fields — only include items that have a value
+  const statsItems = [
+    { icon: Search,    value: heroData?.statsClients,      label: heroData?.statsClientsLabel },
+    { icon: TrendingUp, value: heroData?.statsProjects,    label: heroData?.statsProjectsLabel },
+    { icon: Award,     value: heroData?.statsRating,       label: heroData?.statsRatingLabel },
+    { icon: CheckCircle, value: heroData?.statsSatisfaction, label: heroData?.statsSatisfactionLabel },
+  ].filter(s => !!s.value);
 
+  const hasStats = statsItems.length > 0;
   return (
     <motion.section
       ref={ref}
@@ -157,21 +156,19 @@ export const Hero = () => {
                 }}
                 className="bg-gradient-to-r from-[hsl(45,100%,50%)] via-[hsl(30,100%,45%)] to-[hsl(45,100%,50%)] bg-[length:200%_100%] bg-clip-text text-transparent"
               >
-                {loading ? "Loading..." : tagline}
+                {tagline}
               </motion.span>
             </motion.div>
 
             {/* Title with Gold Gradient like Frontend */}
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-5 md:mb-6 leading-[1.15] sm:leading-[1.12] md:leading-[1.1]">
-              {loading ? "Loading..." : (
-                title?.includes(':') ? (
-                  <>
-                    <span className="text-foreground">{title.split(':')[0]}:</span>
-                    <span className="bg-gradient-to-r from-[hsl(45,100%,50%)] to-[hsl(30,100%,45%)] bg-clip-text text-transparent">{title.split(':')[1]}</span>
-                  </>
-                ) : (
-                  <span className="bg-gradient-to-r from-[hsl(45,100%,50%)] to-[hsl(30,100%,45%)] bg-clip-text text-transparent">{title}</span>
-                )
+              {title?.includes(':') ? (
+                <>
+                  <span className="text-foreground">{title.split(':')[0]}:</span>
+                  <span className="bg-gradient-to-r from-[hsl(45,100%,50%)] to-[hsl(30,100%,45%)] bg-clip-text text-transparent">{title.split(':')[1]}</span>
+                </>
+              ) : (
+                <span className="bg-gradient-to-r from-[hsl(45,100%,50%)] to-[hsl(30,100%,45%)] bg-clip-text text-transparent">{title}</span>
               )}
             </h1>
 
@@ -300,67 +297,38 @@ export const Hero = () => {
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              {/* Stats Card overlay */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 }}
-                className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 backdrop-blur-xl bg-gradient-to-br from-[#2A1B0E] via-[#3D2817] to-[#4A3320] border border-[hsl(45,100%,55%)]/50 rounded-xl p-4 sm:p-5 shadow-2xl"
-                style={{ transform: "translateZ(80px)" }}
-              >
-                <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.2, duration: 0.5 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="text-center"
-                  >
-                    <motion.div
-                      animate={{ y: [-3, 3, -3] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Search className="w-4 h-4 sm:w-5 sm:h-5 mx-auto mb-1 text-[hsl(45,100%,55%)] transition-colors" aria-hidden="true" />
-                      <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white">{stats.clients}</div>
-                      <div className="text-[9px] sm:text-[10px] md:text-xs text-white/70 font-medium">{statsLabels.clients}</div>
-                    </motion.div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.3, duration: 0.5 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="text-center border-x border-white/20"
-                  >
-                    <motion.div
-                      animate={{ y: [-3, 3, -3] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                    >
-                      <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 mx-auto mb-1 text-[hsl(45,100%,55%)] transition-colors" aria-hidden="true" />
-                      <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white">{stats.costSaved}</div>
-                      <div className="text-[9px] sm:text-[10px] md:text-xs text-white/70 font-medium">{statsLabels.costSaved}</div>
-                    </motion.div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 1.4, duration: 0.5 }}
-                    whileHover={{ scale: 1.05 }}
-                    className="text-center"
-                  >
-                    <motion.div
-                      animate={{ y: [-3, 3, -3] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                    >
-                      <Award className="w-4 h-4 sm:w-5 sm:h-5 mx-auto mb-1 text-[hsl(45,100%,55%)] transition-colors" aria-hidden="true" />
-                      <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white">{stats.rating}</div>
-                      <div className="text-[9px] sm:text-[10px] md:text-xs text-white/70 font-medium">{statsLabels.rating}</div>
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </motion.div>
+              {/* Stats Card — only rendered when API returns stat values */}
+              {hasStats && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1 }}
+                  className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 md:bottom-6 md:left-6 md:right-6 backdrop-blur-xl bg-gradient-to-br from-[#2A1B0E] via-[#3D2817] to-[#4A3320] border border-[hsl(45,100%,55%)]/50 rounded-xl p-4 sm:p-5 shadow-2xl"
+                  style={{ transform: "translateZ(80px)" }}
+                >
+                  <div className={`grid gap-3 sm:gap-4 md:gap-6`} style={{ gridTemplateColumns: `repeat(${statsItems.length}, 1fr)` }}>
+                    {statsItems.map(({ icon: Icon, value, label }, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.2 + i * 0.1, duration: 0.5 }}
+                        whileHover={{ scale: 1.05 }}
+                        className={`text-center${i > 0 ? " border-l border-white/20" : ""}`}
+                      >
+                        <motion.div
+                          animate={{ y: [-3, 3, -3] }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+                        >
+                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 mx-auto mb-1 text-[hsl(45,100%,55%)]" aria-hidden="true" />
+                          <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white">{value}</div>
+                          <div className="text-[9px] sm:text-[10px] md:text-xs text-white/70 font-medium">{label}</div>
+                        </motion.div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
 
             {/* Animated decorative elements */}

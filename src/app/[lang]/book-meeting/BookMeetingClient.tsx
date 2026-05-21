@@ -1,224 +1,166 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Calendar,
   Clock,
   Video,
   CheckCircle2,
-  ArrowLeft,
-  Menu,
-  X,
   Star,
   Shield,
+  Sparkles,
+  Users,
+  ArrowRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+
+const copy = {
+  en: {
+    badge: "Free Consultation",
+    title: "Book Your Free Strategy Call",
+    subtitle: "Schedule a 15-minute call and discover how we can transform your online presence with premium web design.",
+    whatTitle: "What to Expect",
+    items: [
+      { icon: Clock, title: "15-Minute Session", desc: "Quick, focused discussion about your needs" },
+      { icon: Video, title: "Virtual Meeting", desc: "Join via Google Meet or Zoom" },
+      { icon: CheckCircle2, title: "No Commitment", desc: "Free consultation with zero obligations" },
+    ],
+    discussTitle: "We'll Discuss",
+    discuss: [
+      "Your current website & design challenges",
+      "How great design can elevate your brand",
+      "Custom solutions tailored to your business",
+      "Pricing & timeline options",
+      "Next steps to get started",
+    ],
+    stats: [
+      { value: "50+", label: "Clients" },
+      { value: "250+", label: "Projects" },
+      { value: "4.9/5", label: "Rating" },
+    ],
+    testimonials: [
+      { name: "Sarah Johnson", role: "CEO, TechStart Inc", text: "don-webdesign transformed our website completely. The design work elevated our online presence.", rating: 5 },
+      { name: "Michael Chen", role: "Founder, Digital Growth", text: "Best decision we made. Our brand visibility has grown significantly within weeks.", rating: 5 },
+      { name: "Emma Davis", role: "Director, MarketPro", text: "Creative, professional, and detail-oriented. Couldn't ask for more from a design partner.", rating: 5 },
+    ],
+    testimonialsTitle: "What Our Clients Say",
+    testimonialsSubtitle: "See why brands trust don-webdesign",
+    secure: "100% Secure & Confidential",
+  },
+  de: {
+    badge: "Kostenlose Beratung",
+    title: "Kostenloses Strategiegespräch buchen",
+    subtitle: "Vereinbaren Sie einen 15-minütigen Anruf und erfahren Sie, wie wir Ihre Online-Präsenz mit Premium-Webdesign transformieren können.",
+    whatTitle: "Was Sie erwartet",
+    items: [
+      { icon: Clock, title: "15-Minuten-Session", desc: "Kurzes, fokussiertes Gespräch über Ihre Bedürfnisse" },
+      { icon: Video, title: "Virtuelles Meeting", desc: "Per Google Meet oder Zoom" },
+      { icon: CheckCircle2, title: "Keine Verpflichtung", desc: "Kostenlose Beratung ohne Verbindlichkeiten" },
+    ],
+    discussTitle: "Wir besprechen",
+    discuss: [
+      "Ihre aktuelle Website & Design-Herausforderungen",
+      "Wie gutes Design Ihre Marke stärkt",
+      "Individuelle Lösungen für Ihr Unternehmen",
+      "Preis- & Zeitplanoptionen",
+      "Nächste Schritte zum Start",
+    ],
+    stats: [
+      { value: "50+", label: "Kunden" },
+      { value: "250+", label: "Projekte" },
+      { value: "4.9/5", label: "Bewertung" },
+    ],
+    testimonials: [
+      { name: "Sarah Johnson", role: "CEO, TechStart Inc", text: "don-webdesign hat unsere Website komplett transformiert. Die Designarbeit hat unsere Online-Präsenz aufgewertet.", rating: 5 },
+      { name: "Michael Chen", role: "Gründer, Digital Growth", text: "Beste Entscheidung, die wir getroffen haben. Unsere Markensichtbarkeit ist innerhalb von Wochen deutlich gestiegen.", rating: 5 },
+      { name: "Emma Davis", role: "Direktorin, MarketPro", text: "Kreativ, professionell und detailorientiert. Mehr kann man von einem Designpartner nicht verlangen.", rating: 5 },
+    ],
+    testimonialsTitle: "Was unsere Kunden sagen",
+    testimonialsSubtitle: "Erfahren Sie, warum Marken don-webdesign vertrauen",
+    secure: "100% Sicher & Vertraulich",
+  },
+};
 
 export default function BookMeetingClient() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const lang = pathname.startsWith("/ge") || pathname.startsWith("/de") ? "de" : "en";
-  const homePath = lang === "de" ? "/de" : "/en";
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const c = copy[lang];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-blue-500/3 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background relative overflow-hidden">
+      {/* Background blobs — matches Hero/Contact gold glow */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[hsl(45,100%,50%)]/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[hsl(45,100%,50%)]/4 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[hsl(45,100%,50%)]/[0.02] rounded-full blur-[200px] pointer-events-none" />
 
-      {/* Navbar */}
-      <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-background/98 backdrop-blur-2xl border-b-2 border-blue-500/20 shadow-2xl shadow-blue-500/5"
-            : "bg-background/90 backdrop-blur-xl border-b border-border/30"
-        }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.7, type: "spring", damping: 20 }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Logo */}
-            <Link href={homePath}>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="flex items-center space-x-3 cursor-pointer group"
-              whileHover={{ scale: 1.02 }}
-            >
-              <motion.div
-                className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl group-hover:shadow-blue-500/30 transition-all duration-500"
-                whileHover={{ rotate: 5, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <span className="text-black font-black text-xl sm:text-2xl">D</span>
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </motion.div>
-              <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-foreground via-foreground to-foreground/90 bg-clip-text text-transparent group-hover:from-blue-400 group-hover:to-blue-600 transition-all duration-300">
-                  don-webdesign
-                </span>
-                <span className="text-[10px] sm:text-xs text-blue-400/80 font-semibold -mt-1 tracking-wide">
-                  Web Design Agency
-                </span>
-              </div>
-            </motion.div>
-            </Link>
-            <div className="hidden md:flex items-center gap-2 lg:gap-6">
-              <Link href={homePath}>
-                <Button
-                  variant="ghost"
-                  className="text-muted-foreground hover:text-blue-400 hover:bg-blue-500/10 transition-all duration-300 font-semibold px-4 py-2 rounded-xl group"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
-                  Home
-                </Button>
-              </Link>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  onClick={() =>
-                    window.open(
-                      "https://calendly.com/mmubasharshahzad40/new-meeting",
-                      "_blank",
-                      "noopener,noreferrer"
-                    )
-                  }
-                  className="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-400 text-black font-bold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 border-2 border-blue-500/50"
-                >
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Book Now
-                </Button>
-              </motion.div>
-            </div>
+      <Navbar />
 
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden relative w-11 h-11 rounded-xl border border-border/50 hover:border-blue-400/50 hover:bg-blue-500/5 transition-all duration-300"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={mobileMenuOpen ? "close" : "open"}
-                  initial={{ rotate: -180, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 180, opacity: 0 }}
-                  transition={{ duration: 0.3, type: "spring" }}
-                  className="flex items-center justify-center"
-                >
-                  {mobileMenuOpen ? (
-                    <X className="h-5 w-5 text-blue-400" />
-                  ) : (
-                    <Menu className="h-5 w-5 text-foreground" />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </Button>
-          </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 pt-28 pb-20">
 
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.4, type: "spring" }}
-                className="md:hidden border-t-2 border-blue-500/20 bg-background/95 backdrop-blur-xl"
-              >
-                <div className="py-6 space-y-4">
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="px-4"
-                  >
-                    <Button
-                      onClick={() => {
-                        document
-                          .querySelector("iframe[title='Book a meeting']")
-                          ?.scrollIntoView({ behavior: "smooth" });
-                        setMobileMenuOpen(false);
-                      }}
-                      className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-400 text-black font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      <Calendar className="w-5 h-5 mr-2" />
-                      Book Your Meeting Now
-                    </Button>
-                  </motion.div>
-                  <div className="h-px bg-border/50 mx-4" />
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <Link href={homePath} onClick={() => setMobileMenuOpen(false)} className="w-full">
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-muted-foreground hover:text-blue-400 hover:bg-blue-500/5 py-3 rounded-xl transition-all duration-300 group"
-                      >
-                        <ArrowLeft className="w-5 h-5 mr-3 group-hover:-translate-x-1 transition-transform duration-300" />
-                        <span className="font-semibold">Back to Home</span>
-                      </Button>
-                    </Link>
-                  </motion.div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.nav>
+        {/* Page Header */}
+        <motion.div
+          className="text-left mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[hsl(45,100%,50%)]/10 border border-[hsl(45,100%,50%)]/20 text-[hsl(45,100%,40%)] dark:text-[hsl(45,100%,60%)] text-xs font-semibold rounded-full mb-4 tracking-wide uppercase">
+            <Sparkles className="w-3.5 h-3.5" />
+            {c.badge}
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+            {c.title}
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            {c.subtitle}
+          </p>
+        </motion.div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 pt-24 sm:pt-28 pb-12 sm:pb-16 md:pb-20 lg:pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 max-w-7xl mx-auto">
-          {/* Left Column */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+
+          {/* Left — Info Panel */}
           <motion.div
-            className="lg:col-span-2 space-y-6 sm:space-y-8"
-            initial={{ opacity: 0, x: -50 }}
+            className="lg:col-span-2 lg:sticky lg:top-28 space-y-6"
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-foreground">
-                Book Your Consultation
-              </h2>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Schedule a free 15-minute call to discuss how we can help your business.
-              </p>
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-3">
+              {c.stats.map(({ value, label }, i) => (
+                <motion.div
+                  key={label}
+                  className="text-center p-4 bg-card border border-border/50 rounded-xl hover:border-[hsl(45,100%,50%)]/40 hover:shadow-lg transition-all duration-300 group cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.15 + i * 0.1 }}
+                >
+                  <div className="w-8 h-8 mx-auto mb-2 rounded-lg bg-[hsl(45,100%,50%)]/10 border border-[hsl(45,100%,50%)]/20 flex items-center justify-center group-hover:bg-[hsl(45,100%,50%)]/20 transition-colors">
+                    <Users className="w-4 h-4 text-[hsl(45,100%,50%)]" />
+                  </div>
+                  <div className="text-xl font-bold text-foreground group-hover:text-[hsl(45,100%,40%)] dark:group-hover:text-[hsl(45,100%,60%)] transition-colors">{value}</div>
+                  <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Meeting Details */}
-            <div className="space-y-4 p-5 sm:p-6 bg-card border border-border rounded-xl shadow-md">
-              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4">What to Expect</h3>
+            {/* What to Expect */}
+            <div className="p-5 sm:p-6 bg-card border border-border/50 rounded-xl space-y-4 hover:border-[hsl(45,100%,50%)]/20 transition-colors duration-300">
+              <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-[hsl(45,100%,50%)]" />
+                {c.whatTitle}
+              </h3>
               <div className="space-y-4">
-                {[
-                  { icon: Clock, title: "15-Minute Session", desc: "Quick, focused discussion about your needs" },
-                  { icon: Video, title: "Virtual Meeting", desc: "Join via Google Meet or Zoom" },
-                  { icon: CheckCircle2, title: "No Commitment", desc: "Free consultation with no obligations" },
-                ].map(({ icon: Icon, title, desc }) => (
+                {c.items.map(({ icon: Icon, title, desc }) => (
                   <div key={title} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-blue-400" />
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[hsl(45,100%,50%)]/10 border border-[hsl(45,100%,50%)]/20 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-[hsl(45,100%,50%)]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-base text-foreground mb-1">{title}</h4>
-                      <p className="text-sm text-muted-foreground">{desc}</p>
+                      <div className="font-semibold text-sm text-foreground">{title}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{desc}</div>
                     </div>
                   </div>
                 ))}
@@ -226,19 +168,13 @@ export default function BookMeetingClient() {
             </div>
 
             {/* We'll Discuss */}
-            <div className="space-y-4 p-5 sm:p-6 bg-blue-500/5 border border-blue-500/20 rounded-xl">
-              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4">We&apos;ll Discuss</h3>
-              <ul className="space-y-3">
-                {[
-                  "Your current brand & design challenges",
-                  "How great design can elevate your brand",
-                  "Custom creative solutions for your business",
-                  "Pricing & team structure options",
-                  "Next steps to get started",
-                ].map((item) => (
+            <div className="p-5 sm:p-6 bg-[hsl(45,100%,50%)]/5 border border-[hsl(45,100%,50%)]/20 rounded-xl space-y-3">
+              <h3 className="font-bold text-foreground text-base">{c.discussTitle}</h3>
+              <ul className="space-y-2.5">
+                {c.discuss.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
-                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[hsl(45,100%,50%)]/10 border border-[hsl(45,100%,50%)]/20 flex items-center justify-center mt-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-[hsl(45,100%,50%)]" />
                     </div>
                     <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
                   </li>
@@ -246,92 +182,75 @@ export default function BookMeetingClient() {
               </ul>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-3 gap-4 pt-4">
-              {[
-                { value: "50+", label: "Clients" },
-                { value: "250+", label: "Projects" },
-                { value: "4.9/5", label: "Rating" },
-              ].map(({ value, label }) => (
-                <div key={label} className="text-center p-4 bg-card border border-border rounded-lg">
-                  <div className="text-2xl font-bold text-blue-400">{value}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{label}</div>
-                </div>
-              ))}
+            {/* Security note */}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground p-3 bg-muted/30 rounded-lg">
+              <Shield className="w-4 h-4 text-[hsl(45,100%,50%)] flex-shrink-0" />
+              <span>{c.secure}</span>
             </div>
           </motion.div>
 
-          {/* Right Column - Calendly */}
-          <div className="lg:col-span-3 order-first lg:order-last">
-            <div className="lg:sticky lg:top-24">
-              <div className="bg-card border border-border rounded-xl p-2 shadow-lg">
-                <iframe
-                  src="https://calendly.com/don-webdesign/webdesign-consultation?embed_domain=don-webdesign.com&embed_type=Inline"
-                  className="rounded-lg"
-                  style={{ minWidth: "100%", height: "600px", border: "none" }}
-                  title="Book a meeting"
-                />
+          {/* Right — Calendly Embed */}
+          <motion.div
+            className="lg:col-span-3 order-first lg:order-last"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="lg:sticky lg:top-28">
+              {/* Embed card — gold border accent matching Hero image card */}
+              <div className="relative rounded-2xl overflow-hidden border-2 border-[hsl(45,100%,50%)]/30 shadow-[0_30px_80px_-20px_hsl(45,100%,50%/0.2)] bg-card">
+                {/* Top shimmer bar */}
+                <div className="h-1 w-full bg-gradient-to-r from-[hsl(45,100%,50%)] via-[hsl(30,100%,45%)] to-[hsl(45,100%,50%)]" />
+                <div className="p-2">
+                  <iframe
+                    src="https://calendly.com/d/cyhx-wdw-b57?embed_domain=don-webdesign.com&embed_type=Inline"
+                    className="rounded-xl w-full"
+                    style={{ minWidth: "100%", height: "620px", border: "none" }}
+                    title="Book a meeting"
+                  />
+                </div>
               </div>
-              <div className="mt-4 p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg text-center">
-                <p className="text-sm text-muted-foreground">
-                  <Shield className="w-4 h-4 inline mr-2 text-blue-400" />
-                  <span className="font-semibold text-foreground">100% Secure & Confidential</span>
+              <div className="mt-4 p-4 bg-[hsl(45,100%,50%)]/5 border border-[hsl(45,100%,50%)]/20 rounded-xl text-center">
+                <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                  <Shield className="w-4 h-4 text-[hsl(45,100%,50%)]" />
+                  <span className="font-semibold text-foreground">{c.secure}</span>
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Testimonials */}
         <motion.div
-          className="mt-16 sm:mt-20 max-w-5xl mx-auto"
+          className="mt-20 max-w-5xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-foreground">
-              What Our Clients Say
-            </h2>
-            <p className="text-muted-foreground">See why brands trust don-webdesign</p>
+          <div className="text-left mb-10">
+            <span className="inline-block px-4 py-2 bg-[hsl(45,100%,50%)] text-[hsl(30,85%,10%)] text-sm font-bold rounded-full mb-4 shadow-md">
+              {c.testimonialsTitle}
+            </span>
+            <p className="text-muted-foreground">{c.testimonialsSubtitle}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "CEO, TechStart Inc",
-                text: "don-webdesign transformed our website completely. The design work elevated our online presence.",
-                rating: 5,
-              },
-              {
-                name: "Michael Chen",
-                role: "Founder, Digital Growth",
-                text: "Best decision we made. Our team productivity has grown significantly within weeks.",
-                rating: 5,
-              },
-              {
-                name: "Emma Davis",
-                role: "Director, MarketPro",
-                text: "Creative, professional, and detail-oriented. Couldn't ask for more from a design partner.",
-                rating: 5,
-              },
-            ].map((t, idx) => (
+            {c.testimonials.map((t, idx) => (
               <motion.div
                 key={t.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + idx * 0.1 }}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl p-6 hover:border-blue-400/50 hover:shadow-lg transition-all duration-300"
+                transition={{ delay: 0.6 + idx * 0.1 }}
+                className="bg-card border border-border/50 rounded-xl p-6 hover:border-[hsl(45,100%,50%)]/40 hover:shadow-lg transition-all duration-300 group"
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(t.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-blue-400 fill-blue-400" />
+                    <Star key={i} className="w-4 h-4 text-[hsl(45,100%,50%)] fill-[hsl(45,100%,50%)]" />
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-500/10 flex items-center justify-center">
-                    <span className="text-blue-400 font-bold text-sm">
+                <p className="text-sm text-muted-foreground mb-5 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-border/30">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[hsl(45,100%,50%)]/40 to-[hsl(45,100%,50%)]/10 border border-[hsl(45,100%,50%)]/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-[hsl(45,100%,40%)] dark:text-[hsl(45,100%,60%)] font-bold text-xs">
                       {t.name.split(" ").map((n) => n[0]).join("")}
                     </span>
                   </div>
@@ -339,6 +258,7 @@ export default function BookMeetingClient() {
                     <div className="font-semibold text-sm text-foreground">{t.name}</div>
                     <div className="text-xs text-muted-foreground">{t.role}</div>
                   </div>
+                  <ArrowRight className="w-4 h-4 text-[hsl(45,100%,50%)]/50 ml-auto" />
                 </div>
               </motion.div>
             ))}
