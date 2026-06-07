@@ -30,6 +30,7 @@ const getIconComponent = (iconName: string) => {
 
 export const WhyChooseUs = () => {
   const ref = useRef(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   
   const [whyChooseUsData, setWhyChooseUsData] = useState<WhyChooseUsData | null>(null);

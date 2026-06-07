@@ -128,7 +128,7 @@ export async function fetchApiData<T>(
   options: RequestInit = {}
 ): Promise<T | null> {
   // Derive a cache tag from the endpoint path e.g. '/api/hero' -> 'hero'
-  const tag = endpoint.replace(/^\/api\//, "").split("?")[0];
+  const tag = endpoint.replace(/^\/api\//, "").split("?")[0]; // eslint-disable-line @typescript-eslint/no-unused-vars
   try {
     const url = buildApiUrl(endpoint, lang);
     const tenantId = getTenantId();

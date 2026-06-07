@@ -5,7 +5,7 @@
 export const isProduction = process.env.NODE_ENV === "production";
 
 // Force correct production domain - update this if domain changes
-const PRODUCTION_SITE_URL = "https://www.DON SEO.com";
+const PRODUCTION_SITE_URL = "https://don-seo.com";
 const DEFAULT_SITE_URL = isProduction ? PRODUCTION_SITE_URL : "http://localhost:3000";
 
 // Get env var but validate it doesn't contain old/wrong domains
