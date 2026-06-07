@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { HomeBelowFold } from "@/components/HomeBelowFold.hybrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { fetchApiDataClient, API_ENDPOINTS, normalizeLanguage, type HeroData } from "@/lib/api";
+import { fetchApiDataClient, API_ENDPOINTS, normalizeLanguage } from "@/lib/api";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL, absoluteUrl, hreflangAlternates, publicLocalePathSegment } from "@/lib/site-url";
 
@@ -183,19 +183,6 @@ export default async function HomeLangPage({
   const lang = rawLang === 'de' || rawLang === 'ge' ? 'ge' : 'en';
   const jsonLd = pageJsonLd(SITE_URL)[lang];
 
-  // Fetch hero + FAQ in parallel server-side
-  const heroApiData = await fetchApiDataClient<{ hero: HeroData | HeroData[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang));
-
-  let initialHero: HeroData | null = null;
-  if (heroApiData?.hero) {
-    if (Array.isArray(heroApiData.hero)) {
-      const sorted = [...heroApiData.hero].sort((a, b) => (b._id || '').localeCompare(a._id || ''));
-      initialHero = sorted[0] || null;
-    } else {
-      initialHero = heroApiData.hero;
-    }
-  }
-
   const faqs: any[] = [];
   const faqSchema = null;
 
@@ -222,7 +209,7 @@ export default async function HomeLangPage({
       )}
       <Navbar />
       <main id="main-content" className="overflow-x-hidden">
-        <Hero initialData={initialHero} />
+        <Hero lang={lang} />
         <HomeBelowFold lang={lang} />
       </main>
     </div>
