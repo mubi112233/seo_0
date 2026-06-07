@@ -213,10 +213,13 @@ export interface HeroData {
   // Flat stat fields as returned by the API
   statsClients?: string;
   statsClientsLabel?: string;
-  statsProjects?: string;
-  statsProjectsLabel?: string;
+  statsTraffic?: string;
+  statsTrafficLabel?: string;
   statsRating?: string;
   statsRatingLabel?: string;
+  // legacy flat fields
+  statsProjects?: string;
+  statsProjectsLabel?: string;
   statsSatisfaction?: string;
   statsSatisfactionLabel?: string;
 }
@@ -357,7 +360,7 @@ export interface FAQResponse {
 }
 
 export const fetchFAQ = (lang: string = 'en') => 
-  fetchApiData<FAQResponse>(API_ENDPOINTS.FAQ, normalizeLanguage(lang));
+  fetchApiDataClient<FAQResponse>(API_ENDPOINTS.FAQ, normalizeLanguage(lang));
 
 // Case Studies API
 export interface CaseStudy {

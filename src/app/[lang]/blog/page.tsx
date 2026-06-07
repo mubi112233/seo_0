@@ -16,31 +16,31 @@ export async function generateMetadata({
 
   const isDe = seg === "de";
   const title = isDe
-    ? "Webdesign Blog — Tipps & Best Practices | don-webdesign"
-    : "Web Design Blog — Tips & Best Practices | don-webdesign";
+    ? "SEO Blog — Tipps & Strategien | DON SEO"
+    : "SEO Blog — Tips & Strategies | DON SEO";
   const description = isDe
-    ? "Einblicke, Tipps und Best Practices zu Webdesign, Webentwicklung und Conversion-Optimierung — auf Deutsch."
-    : "Insights, tips, and best practices for web design, web development, and conversion optimization.";
+    ? "Praktische SEO-Leitfäden, Content-Strategien und Tipps zur Verbesserung Ihrer Google-Rankings – auf Deutsch."
+    : "Practical SEO guides, content strategies and tips for improving your Google rankings and organic traffic.";
 
   return {
     title,
     description,
     keywords: isDe
       ? [
-          "Webdesign Blog",
-          "Webentwicklung Tipps",
-          "Website Design deutsch",
-          "UX Design",
-          "don-webdesign",
-          "Webdesign Agentur Blog",
+          "SEO Blog",
+          "Suchmaschinenoptimierung Tipps",
+          "Content Marketing deutsch",
+          "Google Rankings",
+          "DON SEO",
+          "SEO Agentur Blog",
         ]
       : [
-          "web design blog",
-          "web development tips",
-          "website design insights",
-          "UX design",
-          "don-webdesign",
-          "web agency blog",
+          "SEO blog",
+          "search engine optimization tips",
+          "content marketing insights",
+          "Google ranking",
+          "DON SEO",
+          "SEO agency blog",
         ],
     alternates: {
       canonical,
@@ -53,8 +53,8 @@ export async function generateMetadata({
       type: "website",
       locale: isDe ? "de_DE" : "en_US",
       alternateLocale: isDe ? "en_US" : "de_DE",
-      siteName: "don-webdesign",
-      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "don-webdesign Design Blog" }],
+      siteName: "DON SEO",
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "DON SEO Blog" }],
     },
     twitter: {
       card: "summary_large_image",

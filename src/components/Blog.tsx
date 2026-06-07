@@ -89,27 +89,22 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
     return (
       <motion.section
         id="blog"
-        className={`relative ${SPACING.section} bg-background overflow-hidden`}
+        className={`relative ${SPACING.section} ${SPACING.sideMargin} bg-background overflow-hidden`} data-testid="blog-loading"
       >
         <div className={`container mx-auto ${SPACING.container}`}>
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-[hsl(270,80%,75%)]" />
+            <Loader2 className="w-8 h-8 animate-spin text-gold" />
           </div>
         </div>
       </motion.section>
     );
   }
 
-  const validPosts = posts.filter((post) => {
-    const id = post.blogId ?? post.id;
-    return id != null && !Number.isNaN(Number(id));
-  });
-
-  if (error || validPosts.length === 0) {
+  if (error || posts.length === 0) {
     return (
       <motion.section
         id="blog"
-        className={`relative ${SPACING.section} bg-background overflow-hidden`}
+        className={`relative ${SPACING.section} ${SPACING.sideMargin} bg-background overflow-hidden`}
       >
         <div className={`container mx-auto ${SPACING.container}`}>
           <div className="text-center py-20">
@@ -127,44 +122,41 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
   return (
     <motion.section
       id="blog"
-      className={`relative ${SPACING.section} bg-background overflow-hidden`}
+      className={`relative ${SPACING.section} ${SPACING.sideMargin} bg-background overflow-hidden`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
-      <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-primary/5 rounded-full blur-[100px] md:blur-[150px]" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-primary/5 rounded-full blur-[100px] md:blur-[150px]" />
+      <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-gold/5 rounded-full blur-[100px] md:blur-[150px]" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-gold/5 rounded-full blur-[100px] md:blur-[150px]" />
 
       <div className={`container mx-auto ${SPACING.container} relative z-10`}>
         <div className="mb-12 sm:mb-16 lg:mb-20 text-left max-w-5xl">
-          <span className="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-full mb-4 shadow-md">
+          <span className="inline-block px-4 py-2 bg-gold text-foreground text-sm font-bold rounded-full mb-4 shadow-md" data-testid="blog-badge">
             {copy.badge}
           </span>
           <h2
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 text-foreground leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 text-foreground leading-tight" data-testid="blog-heading"
             dangerouslySetInnerHTML={{ __html: decodeHtml(copy.heading) }}
           />
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-4xl leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-4xl leading-relaxed" data-testid="blog-description">
             {copy.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {validPosts.map((post: BlogPost, index: number) => {
-            const postId = post.blogId ?? post.id;
-            const postSlug = post.slug || `${slugify(post.title)}-${postId}`;
-            return (
+          {posts.map((post: BlogPost, index: number) => (
             <motion.div
-              key={`${post.blogId || post.id || 'post'}-${index}`}
+              key={post.blogId || post.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link
-                href={`/${currentLang}/blog/${postSlug}`}
-                className="group bg-card border border-border rounded-xl sm:rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 w-full block h-full"
+                href={`/${currentLang}/blog/${slugify(post.title)}-${post.blogId || post.id}`}
+                className="group bg-card border border-border/50 rounded-xl sm:rounded-2xl overflow-hidden hover:border-gold/50 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-2 w-full block h-full" data-testid="blog-post-card"
               >
                 {/* Image */}
                 <div className="relative h-44 sm:h-52 md:h-48 lg:h-56 overflow-hidden">
@@ -176,7 +168,7 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                    <span className="px-3 py-1 bg-gold text-foreground text-xs font-bold rounded-full" data-testid="blog-category">
                       {post.category}
                     </span>
                   </div>
@@ -196,11 +188,11 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
                     </div>
                   </div>
 
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-3 sm:mb-4 text-foreground group-hover:text-gold transition-colors line-clamp-2" data-testid="blog-title">
                     {post.title}
                   </h3>
 
-                  <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 line-clamp-3 sm:line-clamp-4 leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 line-clamp-3 sm:line-clamp-4 leading-relaxed" data-testid="blog-excerpt">
                     {post.excerpt}
                   </p>
 
@@ -208,7 +200,7 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
                     <span className="text-xs sm:text-sm text-muted-foreground truncate">
                       {copy.by} {post.author}
                     </span>
-                    <div className="flex items-center gap-1 sm:gap-2 text-primary font-semibold text-xs sm:text-sm group-hover:gap-2 sm:group-hover:gap-3 transition-all flex-shrink-0">
+                    <div className="flex items-center gap-1 sm:gap-2 text-gold font-semibold text-xs sm:text-sm group-hover:gap-2 sm:group-hover:gap-3 transition-all flex-shrink-0">
                       <span className="hidden sm:inline">{copy.readMore}</span>
                       <span className="sm:hidden">{copy.read}</span>
                       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -217,8 +209,7 @@ export const Blog = ({ initialPosts }: { initialPosts?: BlogPost[] }) => {
                 </div>
               </Link>
             </motion.div>
-            );
-          })}
+          ))}
         </div>
       </div>
     </motion.section>

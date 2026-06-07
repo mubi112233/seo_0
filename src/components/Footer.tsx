@@ -21,10 +21,10 @@ export const Footer: React.FC = () => {
         { label: "Contact Us", href: "/en/contact" },
       ],
       serviceLinks: [
-        { label: "Logo & Branding", href: "/en/#services" },
-        { label: "Brand Identity", href: "/en/#services" },
-        { label: "Web Design", href: "/en/#services" },
-        { label: "Print Design", href: "/en/#services" },
+        { label: "Technical SEO", href: "/en/#services" },
+        { label: "Content Strategy", href: "/en/#services" },
+        { label: "Link Building", href: "/en/#services" },
+        { label: "Local SEO", href: "/en/#services" },
         { label: "Pricing Plans", href: "/en/#pricing" },
       ],
       resourceLinks: [
@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
         { label: "FAQ", href: "/en/#faq" },
         { label: "Testimonials", href: "/en/#testimonials" },
       ],
-      tagline: "Premium web design agency creating modern, high-converting websites. Save 70% on development with native quality results.",
+      tagline: "Professional SEO agency helping DACH businesses rank higher on Google through data-driven strategies and measurable results.",
       rights: "All rights reserved.",
     },
     ge: {
@@ -47,10 +47,10 @@ export const Footer: React.FC = () => {
         { label: "Kontakt", href: "/de/contact" },
       ],
       serviceLinks: [
-        { label: "Logo & Branding", href: "/de/#services" },
-        { label: "Corporate Design", href: "/de/#services" },
-        { label: "Webdesign", href: "/de/#services" },
-        { label: "Print Design", href: "/de/#services" },
+        { label: "Technisches SEO", href: "/de/#services" },
+        { label: "Content-Strategie", href: "/de/#services" },
+        { label: "Link-Building", href: "/de/#services" },
+        { label: "Lokales SEO", href: "/de/#services" },
         { label: "Preispläne", href: "/de/#pricing" },
       ],
       resourceLinks: [
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
         { label: "Häufige Fragen", href: "/de/#faq" },
         { label: "Kundenstimmen", href: "/de/#testimonials" },
       ],
-      tagline: "Premium Webdesign Agentur für moderne, konvertierende Websites. Sparen Sie 70% bei der Entwicklung mit nativer Qualität.",
+      tagline: "Professionelle SEO-Agentur für DACH-Unternehmen. Mehr organischer Traffic durch datengesteuerte Strategien und messbare Ergebnisse.",
       rights: "Alle Rechte vorbehalten.",
     },
   };
@@ -134,7 +134,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} don-webdesign. {c.rights}</p>
+          <p>© {new Date().getFullYear()} DON SEO. {c.rights}</p>
           <div className="flex items-center gap-4">
             <Link href={localizedPath(lang, siteConfig.routes.blog)} className="hover:text-primary transition-colors">Blog</Link>
             <Link href={localizedPath(lang, siteConfig.routes.contact)} className="hover:text-primary transition-colors">{isGe ? "Kontakt" : "Contact"}</Link>

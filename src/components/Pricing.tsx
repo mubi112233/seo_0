@@ -32,7 +32,7 @@ const plans: PricingPlan[] = [
     price: 369,
     setupFee: 149,
     features: [
-      "Dedicated Design Specialist",
+      "Dedicated SEO Specialist",
       "Native Quality Control", 
       "24h Replacement Guarantee",
       "Slack/Email Support",
@@ -225,13 +225,13 @@ export const Pricing = () => {
             className="inline-block px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs sm:text-sm font-bold rounded-full mb-2 sm:mb-3 md:mb-4 shadow-lg"
             whileHover={{ scale: 1.05 }}
           >
-            {copy.sectionBadge || "Transparent Pricing for Creative Design Packages"}
+            {copy.sectionBadge || "Transparent SEO Pricing"}
           </motion.span>
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 text-foreground leading-tight">
-            Simple, transparent pricing for creative design packages
+            Simple, transparent pricing for SEO services
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            Choose a package that fits your design needs. From logos to complete brand identities.
+            Choose the SEO plan that fits your business goals. Scale up or down anytime.
           </p>
         </motion.div>
 
@@ -275,7 +275,7 @@ export const Pricing = () => {
                   value={num} 
                   className="text-foreground bg-card py-2 sm:py-3"
                 >
-                  {num} {num === 1 ? 'Project' : 'Projects'}
+                  {num} {num === 1 ? 'Plan' : 'Plans'}
                 </option>
               ))}
             </select>

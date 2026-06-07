@@ -3,7 +3,7 @@
  * Fetches all data in parallel for optimal performance
  */
 
-import { fetchAPI, API_ENDPOINTS, normalizeLanguage } from './api';
+import { fetchAPI, fetchAPIClient, API_ENDPOINTS, normalizeLanguage } from './api';
 import type { Service, FAQItem } from './api';
 
 export interface CaseStudyCard {
@@ -164,7 +164,7 @@ export async function fetchFAQData(lang: string): Promise<FAQItem[]> {
 export async function fetchCaseStudiesCardsData(lang: string): Promise<CaseStudyCard[]> {
   try {
     const normalizedLang = normalizeLanguage(lang);
-    const response = await fetchAPI(`${API_ENDPOINTS.CASE_STUDIES}?lang=${normalizedLang}`);
+    const response = await fetchAPIClient(`${API_ENDPOINTS.CASE_STUDIES}?lang=${normalizedLang}`);
     const data = await response.json();
     if (!Array.isArray(data?.caseStudies)) return [];
     return data.caseStudies
@@ -190,7 +190,7 @@ export async function fetchFinalCtaSectionData(
 ): Promise<FinalCtaSectionPayload | null> {
   try {
     const normalizedLang = normalizeLanguage(lang);
-    const response = await fetchAPI(`${API_ENDPOINTS.FINAL_CTA}?lang=${normalizedLang}`);
+    const response = await fetchAPIClient(`${API_ENDPOINTS.FINAL_CTA}?lang=${normalizedLang}`)
     if (!response.ok) return null;
     const data = await response.json();
     const section = data?.finalCta;

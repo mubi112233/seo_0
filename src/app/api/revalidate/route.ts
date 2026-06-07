@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
  * On-demand revalidation endpoint.
  *
  * Your backend calls this after saving any content change:
- *   POST https://www.don-webdesign.com/api/revalidate
+ *   POST https://www.DON SEO.com/api/revalidate
  *   Headers: { "x-revalidate-secret": "<REVALIDATE_SECRET>" }
  *   Body:    { "tags": ["hero", "faq"], "paths": ["/en", "/de"] }
  *

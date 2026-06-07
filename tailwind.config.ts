@@ -15,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        poppins: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
-        inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -80,8 +80,9 @@ export default {
         'gradient-dark': 'var(--gradient-dark)',
       },
       boxShadow: {
-        'gold': 'var(--shadow-gold)',
-        'elegant': 'var(--shadow-elegant)',
+        gold: "var(--shadow-gold)",
+        "gold-lg": "var(--shadow-gold-lg)",
+        elegant: "var(--shadow-elegant)",
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',

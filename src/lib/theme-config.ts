@@ -38,9 +38,9 @@ export interface ColorScheme {
 
 // Define your color schemes here
 export const colorSchemes: Record<string, ColorScheme> = {
-  // Blue Theme (Legacy)
+  // Blue SEO Agency Theme (Current)
   blue: {
-    name: "Blue Theme",
+    name: "Blue SEO Agency",
     colors: {
       primary: "220 100% 50%",        // Bright blue
       primaryDark: "220 100% 40%",     // Darker blue
@@ -204,5 +204,3 @@ const themeConfig = {
 };
 
 export default themeConfig;
-
-

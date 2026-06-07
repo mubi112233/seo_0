@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import "@/styles/main.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { DesignSystemProvider } from "@/components/DesignSystemProvider";
@@ -25,48 +26,48 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#1a1433" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "don-webdesign - Premium Web Design Services | Save 70% on Development",
-    template: "%s | don-webdesign",
+    default: "DON SEO - Professional SEO Services \| Grow Your Organic Traffic",
+    template: "%s | DON SEO",
   },
   description:
-    "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction. Book your free consultation today.",
+    "Data-driven SEO and content marketing for DACH businesses. Rank higher on Google and grow your organic traffic. Book your free consultation today.",
   keywords: [
-    "web design agency",
-    "web development",
-    "premium websites",
-    "website design services",
-    "modern web design",
-    "responsive design",
-    "ecommerce website",
-    "custom web development",
-    "UI/UX design",
-    "website redesign",
+    "SEO agency",
+    "SEO services",
+    "organic growth",
+    "search engine optimization",
+    "technical SEO",
+    "content strategy",
+    "link building",
+    "custom SEO services",
+    "on-page SEO",
+    "SEO audit",
     "webdesign agentur",
-    "website erstellen",
-    "professionelle websites",
-    "wordpress design",
-    "nextjs development",
-    "react websites",
-    "conversion optimization",
-    "don-webdesign",
+    "SEO Agentur",
+    "Suchmaschinenkoptimierung",
+    "Google ranking",
+    "DACH SEO",
+    "SEO consulting",
+    "organic traffic",
+    "DON SEO",
   ],
-  authors: [{ name: "don-webdesign", url: SITE_URL }],
-  creator: "don-webdesign",
-  publisher: "don-webdesign",
+  authors: [{ name: "DON SEO", url: SITE_URL }],
+  creator: "DON SEO",
+  publisher: "DON SEO",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   verification: {
-    google: "owA83i5dtMBx2-hhn9CBrI0wGgffRYCV2ux3FXUGG04",
+    google: "l93HxOLqUBDjtuNfHM7OsWQd7i9MfSJo1fV_yaLAZrE",
   },
   robots: {
     index: true,
@@ -81,20 +82,20 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "don-webdesign",
-    title: "don-webdesign - Premium Web Design Services | Save 70% on Development",
+    siteName: "DON SEO",
+    title: "DON SEO - Professional SEO Services \| Grow Your Organic Traffic",
     description:
-      "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction.",
+      "Data-driven SEO and content marketing for DACH businesses. Rank higher on Google and grow your organic traffic.",
     url: absoluteUrl("/en"),
     locale: "en_US",
     alternateLocale: ["de_DE"],
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "don-webdesign — Premium Web Design Services" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "DON SEO — Professional SEO Services" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "don-webdesign - Premium Web Design Services | Save 70% on Development",
+    title: "DON SEO - Professional SEO Services \| Grow Your Organic Traffic",
     description:
-      "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction.",
+      "Data-driven SEO and content marketing for DACH businesses. Rank higher on Google and grow your organic traffic.",
     images: [absoluteUrl("/opengraph-image")],
   },
   // Per-page alternates are set in each route's generateMetadata.
@@ -104,11 +105,11 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "don-webdesign",
+  name: "DON SEO",
   url: SITE_URL,
   logo: absoluteUrl("/opengraph-image"),
   description:
-    "Premium web design agency specializing in modern websites, web development, UI/UX design, and digital solutions for businesses worldwide.",
+    "Premium SEO agency specializing in modern websites, SEO services, on-page SEO, and digital solutions for businesses worldwide.",
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",
@@ -120,16 +121,16 @@ const organizationJsonLd = {
     { "@type": "Country", name: "Switzerland" },
     { "@type": "Place", name: "Worldwide" },
   ],
-  sameAs: ["https://linkedin.com/company/don-webdesign", "https://twitter.com/don-webdesign", "https://instagram.com/don-webdesign"],
+  sameAs: ["https://linkedin.com/company/DON SEO", "https://twitter.com/DON SEO", "https://instagram.com/DON SEO"],
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "don-webdesign",
+  name: "DON SEO",
   url: SITE_URL,
   inLanguage: ["en-US", "de-DE"],
-  publisher: { "@type": "Organization", name: "don-webdesign" },
+  publisher: { "@type": "Organization", name: "DON SEO" },
 };
 
 // Service schema for web design services
@@ -139,7 +140,7 @@ const serviceJsonLd = {
   serviceType: "Web Design Services",
   provider: {
     "@type": "Organization",
-    name: "don-webdesign",
+    name: "DON SEO",
     url: SITE_URL,
   },
   areaServed: [
@@ -172,7 +173,7 @@ const serviceJsonLd = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "UI/UX Design",
+          name: "on-page SEO",
           description: "User-centered interface design for web and mobile",
         },
       },
@@ -180,7 +181,7 @@ const serviceJsonLd = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Website Redesign",
+          name: "SEO audit",
           description: "Transform your existing site into a conversion machine",
         },
       },
@@ -196,19 +197,19 @@ const serviceJsonLd = {
   },
 };
 
-// LocalBusiness schema for Web Design Agency
+// LocalBusiness schema for SEO agency
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "don-webdesign",
+  name: "DON SEO",
   url: SITE_URL,
   logo: absoluteUrl("/opengraph-image"),
   image: absoluteUrl("/opengraph-image"),
-  description: "Premium web design agency specializing in modern websites, UI/UX design, and digital solutions for businesses",
+  description: "Premium SEO agency specializing in modern websites, on-page SEO, and digital solutions for businesses",
   sameAs: [
-    "https://linkedin.com/company/don-webdesign",
-    "https://twitter.com/don-webdesign",
-    "https://instagram.com/don-webdesign",
+    "https://linkedin.com/company/DON SEO",
+    "https://twitter.com/DON SEO",
+    "https://instagram.com/DON SEO",
   ],
   priceRange: "€€",
   openingHoursSpecification: [
@@ -230,23 +231,25 @@ export default async function RootLayout({
   return (
     <html lang={htmlLang} suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         {/* Performance: Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        
         {/* Security */}
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y41TLVJ50H" />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNDGNQ7Z74" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-Y41TLVJ50H');
+              gtag('config', 'G-LNDGNQ7Z74');
             `,
           }}
         />
@@ -271,7 +274,7 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
-        <DesignSystemProvider defaultTheme="gold">
+        <DesignSystemProvider defaultTheme="blue">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "don-webdesign - Premium Web Design Services",
-    short_name: "don-webdesign",
-    description: "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction.",
+    name: "DON SEO - Professional SEO Services",
+    short_name: "DON SEO",
+    description: "Save 70% on web development with Professional SEO Services. Modern websites that convert. Native quality, guaranteed satisfaction.",
     start_url: "/",
     display: "standalone",
     background_color: "#3D2817",

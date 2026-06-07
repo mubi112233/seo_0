@@ -14,11 +14,9 @@
  GET /en/contact 200 in 26736ms
  Γùï Compiling /[lang] ...
  Γ£ô Compiled /[lang] in 7.7s (5079 modules)
-[fetchApiData] Endpoint: /api/hero | Lang: en | Tenant: webdesign
-[API Server] Fetching: https://api.don-va.com/api/hero?lang=en
+[fetchApiData] Endpoint: /api/hero | Lang: en | Tenant: seo[API Server] Fetching: https://api.don-va.com/api/hero?lang=en
 [API Server] Headers: { 'x-tenant-id': 'webdesign' }
-[API Server] Tenant ID from env: webdesign
-[fetchApiData] Response for /api/hero: {
+[API Server] Tenant ID from env: seo[fetchApiData] Response for /api/hero: {
   lang: 'en',
   hero: {
     _id: '69fcd25d9b33f9733a8633c6',

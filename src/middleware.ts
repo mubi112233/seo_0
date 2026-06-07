@@ -6,9 +6,9 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get("host") || "";
 
   // Enforce www — redirect non-www to www (301)
-  if (host === "don-webdesign.com") {
+  if (host === "DON SEO.com") {
     const wwwUrl = new URL(request.url);
-    wwwUrl.host = "www.don-webdesign.com";
+    wwwUrl.host = "www.DON SEO.com";
     return NextResponse.redirect(wwwUrl, { status: 301 });
   }
 

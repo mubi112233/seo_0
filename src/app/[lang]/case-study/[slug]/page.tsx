@@ -47,7 +47,7 @@ export async function generateMetadata({
 
   if (!caseStudy) return {};
 
-  const title = `${caseStudy.company} - ${caseStudy.title} | don-webdesign`;
+  const title = `${caseStudy.company} - ${caseStudy.title} | DON SEO`;
   const description = caseStudy.challenge.substring(0, 160);
   const pathAfterLocale = `case-study/${slug}`;
   const canonical = absoluteUrl(`/${urlSeg}/${pathAfterLocale}`);
@@ -57,8 +57,8 @@ export async function generateMetadata({
     title,
     description,
     keywords: currentLang === "ge"
-      ? ["Fallstudie", "Webdesign Ergebnisse", caseStudy.company, caseStudy.industry, "don-webdesign"]
-      : ["Case Study", "Web Design Results", caseStudy.company, caseStudy.industry, "don-webdesign"],
+      ? ["Fallstudie", "SEO Ergebnisse", caseStudy.company, caseStudy.industry, "DON SEO"]
+      : ["Case Study", "SEO Results", caseStudy.company, caseStudy.industry, "DON SEO"],
     alternates: { canonical, languages },
     openGraph: {
       title,
@@ -67,7 +67,7 @@ export async function generateMetadata({
       type: "article",
       locale: urlSeg === "de" ? "de_DE" : "en_US",
       alternateLocale: urlSeg === "de" ? "en_US" : "de_DE",
-      siteName: "don-webdesign",
+      siteName: "DON SEO",
       images: caseStudy.image ? [{ url: caseStudy.image, width: 1200, height: 630, alt: caseStudy.company }] : [],
     },
     twitter: {
@@ -110,8 +110,8 @@ export default async function CaseStudyPage({
     "@type": "Article",
     "headline": caseStudy.title,
     "description": caseStudy.challenge,
-    "author": { "@type": "Organization", "name": "don-webdesign", "url": SITE_URL },
-    "publisher": { "@type": "Organization", "name": "don-webdesign", "logo": { "@type": "ImageObject", "url": absoluteUrl("/og-image.jpg") } },
+    "author": { "@type": "Organization", "name": "DON SEO", "url": SITE_URL },
+    "publisher": { "@type": "Organization", "name": "DON SEO", "logo": { "@type": "ImageObject", "url": absoluteUrl("/og-image.jpg") } },
     "image": caseStudy.image,
     "url": absoluteUrl(`/${publicLocalePathSegment(lang)}/case-study/${slug}`),
     "mainEntityOfPage": { "@type": "WebPage", "@id": absoluteUrl(`/${publicLocalePathSegment(lang)}/case-study/${slug}`) },

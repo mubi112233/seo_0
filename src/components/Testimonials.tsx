@@ -50,10 +50,10 @@ export const Testimonials = ({ initialTestimonials }: { initialTestimonials?: Te
 
   if (loading) {
     return (
-      <motion.section id="testimonials" className={`relative ${SPACING.section} bg-background text-foreground z-40`}>
+      <motion.section id="testimonials" className={`relative ${SPACING.section} bg-background text-foreground z-40`} data-testid="testimonials-loading">
         <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-4">
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <Loader2 className="w-8 h-8 animate-spin text-gold" />
           </div>
         </div>
       </motion.section>
@@ -92,25 +92,21 @@ export const Testimonials = ({ initialTestimonials }: { initialTestimonials?: Te
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <motion.span
-            className="inline-block px-2.5 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-primary text-primary-foreground text-xs sm:text-sm font-bold rounded-full mb-2 sm:mb-3 md:mb-4 shadow-lg"
-            whileHover={{ scale: 1.05 }}
-          >
-            {"Client Success Stories"}
-          </motion.span>
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 text-foreground leading-tight">
-            {copy.heading?.replace(/<[^>]*>/g, '') || "Trusted by Growing Businesses"}
-          </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            {copy.subheading || "See how businesses like yours have transformed their online presence with our premium web design services."}
+          <h2 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2"
+            dangerouslySetInnerHTML={{ __html: copy.heading }}
+            data-testid="testimonials-heading"
+          />
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl px-2" data-testid="testimonials-subheading">
+            {copy.subheading}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 max-w-6xl mx-auto mb-8 sm:mb-10 md:mb-12">
           {testimonials.map((testimonial, index) => (
-            <motion.div
+            <motion.div 
               key={testimonial._id || index}
-              className="bg-card backdrop-blur-sm border border-border rounded-lg sm:rounded-xl p-5 sm:p-6 md:p-8 hover:border-primary/40 hover:shadow-lg transition-all duration-300"
+              className="bg-card/50 backdrop-blur-sm border border-border rounded-lg sm:rounded-xl p-5 sm:p-6 md:p-8 hover:bg-card transition-all duration-300" data-testid="testimonial-card"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -118,40 +114,42 @@ export const Testimonials = ({ initialTestimonials }: { initialTestimonials?: Te
             >
               <div className="flex gap-1 mb-3 sm:mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-primary text-primary" />
+                  <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-gold text-gold" />
                 ))}
               </div>
+              
               <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 leading-relaxed">
                 &ldquo;{testimonial.content}&rdquo;
               </p>
+              
               <div className="border-t border-border pt-3 sm:pt-4">
                 <p className="text-sm sm:text-base font-bold text-foreground">{testimonial.name}</p>
-                <p className="text-xs sm:text-sm text-primary">{testimonial.role}</p>
+                <p className="text-xs sm:text-sm text-gold">{testimonial.role}</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">{testimonial.company}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <motion.div
-          className="bg-card border border-primary/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 max-w-5xl mx-auto hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+        <motion.div 
+          className="bg-card border border-gold/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 max-w-5xl mx-auto hover:border-gold/50 transition-all duration-300" data-testid="caseStudy-section"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         >
           <div className="text-left">
-            <span className="inline-block px-3 py-1 bg-primary/20 text-primary text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
+            <span className="inline-block px-3 py-1 bg-gold/10 text-gold text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
               {copy.caseStudy?.badge}
             </span>
-            <h3
-              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-foreground"
+            <h3 
+              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4" data-testid="caseStudy-title"
               dangerouslySetInnerHTML={{ __html: copy.caseStudy?.title }}
             />
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-5 sm:mb-6 leading-relaxed max-w-3xl">
               {copy.caseStudy?.description}
             </p>
-            <Button size="lg" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button variant="gold" size="lg" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
               {copy.caseStudy?.cta}
             </Button>
           </div>

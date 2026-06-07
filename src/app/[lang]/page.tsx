@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { HomeBelowFold } from "@/components/HomeBelowFold.hybrid";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { fetchApiData, API_ENDPOINTS, normalizeLanguage, fetchFAQ, type HeroData } from "@/lib/api";
+import { fetchApiDataClient, API_ENDPOINTS, normalizeLanguage, type HeroData } from "@/lib/api";
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL, absoluteUrl, hreflangAlternates, publicLocalePathSegment } from "@/lib/site-url";
 
@@ -13,7 +13,7 @@ const SUPPORTED_LANGS = ['en', 'ge', 'de'];
 
 async function getHeroMeta(lang: string) {
   try {
-    const data = await fetchApiData<{ hero: any | any[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang));
+    const data = await fetchApiDataClient<{ hero: any | any[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang));
     if (!data?.hero) return null;
 
     // Handle array response (multiple heroes)
@@ -53,39 +53,35 @@ export async function generateMetadata({
   const title =
     hero?.metaTitle ||
     (lang === "ge"
-      ? "don-webdesign – Premium Webdesign Agentur | Websites & Entwicklung"
-      : "don-webdesign – Premium Web Design Agency | Save 70% on Development");
+      ? "DON SEO – Professionelle SEO-Agentur | Organisches Wachstum für DACH"
+      : "DON SEO – Professional SEO Agency | Grow Your Organic Traffic");
   const description =
     hero?.metaDescription ||
     (lang === "ge"
-      ? "Sparen Sie 70% bei der Webentwicklung mit premium Webdesign Services. Moderne Websites, die konvertieren. Native Qualität, garantierte Zufriedenheit."
-      : "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction.");
+      ? "Datengetriebenes SEO und Content Marketing für DACH-Unternehmen. Mehr organischer Traffic und bessere Google-Rankings."
+      : "Data-driven SEO and content marketing for DACH businesses. Rank higher on Google and grow your organic traffic.");
   const keywordsFromHero = hero?.metaKeywords
     ? hero.metaKeywords.split(",").map((k: string) => k.trim())
     : null;
   const defaultDeKeywords = [
-    "Webdesign Agentur",
-    "Webentwicklung",
-    "Premium Websites",
-    "Website Design",
-    "Moderne Webdesign",
-    "Responsive Design",
-    "E-Commerce Website",
-    "Custom Web Entwicklung",
-    "UI/UX Design",
-    "Website Redesign",
+    "SEO Agentur Deutschland",
+    "Suchmaschinenoptimierung",
+    "Content Marketing DACH",
+    "Google Ranking verbessern",
+    "Technisches SEO",
+    "Link Building",
+    "Lokales SEO",
+    "DON SEO",
   ];
   const defaultEnKeywords = [
-    "web design agency",
-    "web development",
-    "premium websites",
-    "website design services",
-    "modern web design",
-    "responsive design",
-    "ecommerce website",
-    "custom web development",
-    "UI/UX design",
-    "website redesign",
+    "SEO agency Germany",
+    "search engine optimization",
+    "content marketing DACH",
+    "Google ranking",
+    "technical SEO",
+    "link building",
+    "local SEO",
+    "DON SEO",
   ];
   const keywords = keywordsFromHero ?? (lang === "ge" ? defaultDeKeywords : defaultEnKeywords);
   const pathSeg = publicLocalePathSegment(lang);
@@ -105,7 +101,7 @@ export async function generateMetadata({
       description,
       url: canonical,
       type: "website",
-      siteName: "don-webdesign",
+      siteName: "DON SEO",
       locale: lang === "ge" ? "de_DE" : "en_US",
       alternateLocale: lang === "ge" ? "en_US" : "de_DE",
       images: [
@@ -113,7 +109,7 @@ export async function generateMetadata({
           url: absoluteUrl("/opengraph-image"),
           width: 1200,
           height: 630,
-          alt: lang === "ge" ? "don-webdesign — Premium Webdesign Agentur" : "don-webdesign — Premium Web Design Services",
+          alt: lang === "ge" ? "DON SEO — Professionelle SEO-Agentur" : "DON SEO — Professional SEO Agency",
         },
       ],
     },
@@ -139,10 +135,10 @@ const pageJsonLd = (baseUrl: string) => ({
   en: {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "don-webdesign — Premium Web Design Services",
-    provider: { "@type": "Organization", name: "don-webdesign" },
+    name: "DON SEO — Professional SEO Services",
+    provider: { "@type": "Organization", name: "DON SEO" },
     description:
-      "Save 70% on web development with premium web design services. Modern websites that convert. Native quality, guaranteed satisfaction.",
+      "Data-driven SEO and content marketing for DACH businesses. Rank higher on Google and grow your organic traffic.",
     areaServed: [
       { "@type": "Country", name: "Germany" },
       { "@type": "Country", name: "Austria" },
@@ -156,10 +152,10 @@ const pageJsonLd = (baseUrl: string) => ({
   ge: {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "don-webdesign — Premium Webdesign Services",
-    provider: { "@type": "Organization", name: "don-webdesign" },
+    name: "DON SEO — Professionelle SEO-Dienstleistungen",
+    provider: { "@type": "Organization", name: "DON SEO" },
     description:
-      "Sparen Sie 70% bei der Webentwicklung mit premium Webdesign Services. Moderne Websites, die konvertieren. Native Qualität, garantierte Zufriedenheit.",
+      "Datengetriebenes SEO und Content Marketing für DACH-Unternehmen. Bessere Google-Rankings und mehr organischer Traffic.",
     areaServed: [
       { "@type": "Country", name: "Germany" },
       { "@type": "Country", name: "Austria" },
@@ -188,10 +184,7 @@ export default async function HomeLangPage({
   const jsonLd = pageJsonLd(SITE_URL)[lang];
 
   // Fetch hero + FAQ in parallel server-side
-  const [heroApiData, faqApiData] = await Promise.all([
-    fetchApiData<{ hero: HeroData | HeroData[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang)),
-    fetchFAQ(normalizeLanguage(lang)),
-  ]);
+  const heroApiData = await fetchApiDataClient<{ hero: HeroData | HeroData[] }>(API_ENDPOINTS.HERO, normalizeLanguage(lang));
 
   let initialHero: HeroData | null = null;
   if (heroApiData?.hero) {
@@ -203,10 +196,8 @@ export default async function HomeLangPage({
     }
   }
 
-  const faqs = faqApiData?.faqs?.slice(0, 10) || [];
-  const faqSchema = faqs.length > 0
-    ? generateFAQSchema(faqs.map((f: any) => ({ question: f.question, answer: f.answer })))
-    : null;
+  const faqs: any[] = [];
+  const faqSchema = null;
 
   // Generate breadcrumb schema
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -232,7 +223,7 @@ export default async function HomeLangPage({
       <Navbar />
       <main id="main-content" className="overflow-x-hidden">
         <Hero initialData={initialHero} />
-        <HomeBelowFold lang={lang} initialFaqs={faqApiData?.faqs || []} />
+        <HomeBelowFold lang={lang} />
       </main>
     </div>
   );

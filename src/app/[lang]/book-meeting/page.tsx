@@ -14,10 +14,10 @@ export async function generateMetadata({
   const { lang: raw } = await params;
   const seg = publicLocalePathSegment(raw);
   const isDE = seg === "de";
-  const title = isDE ? "Termin buchen — Kostenlose Webdesign-Beratung | don-webdesign" : "Book a Meeting — Free Web Design Consultation | don-webdesign";
+  const title = isDE ? "Termin buchen — Kostenlose SEO-Beratung | DON SEO" : "Book a Meeting — Free SEO Consultation | DON SEO";
   const description = isDE
-    ? "Vereinbaren Sie eine kostenlose Beratung mit don-webdesign und erfahren Sie, wie wir Ihnen helfen, Ihre Website zu optimieren."
-    : "Schedule a free consultation with don-webdesign and learn how we can help transform your website with premium design.";
+    ? "Vereinbaren Sie eine kostenlose Beratung mit DON SEO und erfahren Sie, wie wir Ihre Google-Rankings verbessern können."
+    : "Schedule a free consultation with DON SEO and learn how we can grow your organic traffic and improve your rankings.";
   const { languages } = hreflangAlternates("book-meeting");
   const canonical = absoluteUrl(`/${seg}/book-meeting`);
 
@@ -25,8 +25,8 @@ export async function generateMetadata({
     title,
     description,
     keywords: isDE
-      ? ["Webdesign Beratung", "Webdesign Termin", "don-webdesign termin", "Website Beratung"]
-      : ["web design consultation", "web design call", "don-webdesign meeting", "website consultation"],
+      ? ["SEO Beratung", "SEO Termin", "DON SEO Termin", "Suchmaschinenoptimierung Beratung"]
+      : ["SEO consultation", "SEO call", "DON SEO meeting", "search engine optimization consultation"],
     alternates: {
       canonical,
       languages,
@@ -38,8 +38,8 @@ export async function generateMetadata({
       type: "website",
       locale: isDE ? "de_DE" : "en_US",
       alternateLocale: isDE ? "en_US" : "de_DE",
-      siteName: "don-webdesign",
-      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "don-webdesign Web Design Agency" }],
+      siteName: "DON SEO",
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "DON SEO Agency" }],
     },
     twitter: {
       card: "summary_large_image",

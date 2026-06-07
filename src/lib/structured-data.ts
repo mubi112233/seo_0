@@ -24,12 +24,12 @@ export function generateBlogStructuredData({
     "description": description,
     "author": {
       "@type": "Organization",
-      "name": "don-webdesign",
+      "name": "DON SEO",
       "url": SITE_URL
     },
     "publisher": {
       "@type": "Organization",
-      "name": "don-webdesign",
+      "name": "DON SEO",
       "logo": {
         "@type": "ImageObject",
         "url": absoluteUrl("/og-image.jpg")

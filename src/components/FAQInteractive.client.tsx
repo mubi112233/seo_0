@@ -6,15 +6,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Shield, Zap } from "lucide-react";
+import { Shield, Zap, Loader2 } from "lucide-react";
 import { getCopy } from "@/lib/copy";
-import type { FAQItem } from "@/lib/api";
+import { fetchFAQ, type FAQItem } from "@/lib/api";
 
-export function FAQInteractive({ faqs, lang }: { faqs: FAQItem[]; lang: string }) {
+export function FAQInteractive({ lang }: { lang: string }) {
   const copy = getCopy(lang, "faq");
   const [openItem, setOpenItem] = useState<string>("");
+  const [faqs, setFaqs] = useState<FAQItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFAQ(lang)
+      .then((data) => setFaqs(data?.faqs?.slice(0, 10) ?? []))
+      .catch(() => setFaqs([]))
+      .finally(() => setLoading(false));
+  }, [lang]);
+
+  if (loading) {
+    return (
+      <section id="faq" className="relative py-4 sm:py-6 md:py-8 lg:py-10 bg-background">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12">
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
